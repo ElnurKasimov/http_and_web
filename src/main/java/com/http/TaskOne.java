@@ -46,6 +46,9 @@ public class TaskOne {
         User myUser = initializeMyUser();
         HttpUtillities.createNewObject("/users", myUser);
 
+        // Homework Task 1 part 3
+        System.out.println("---------------------------------------------------------------------");
+        System.out.println("Статус операции удаления - " + HttpUtillities.deleteObject("/users", myUser));
 
         // Homework Task 1 part 4
         // System.out.println("Информация о всех пользователях : \n" +HttpUtillities.getInformationAboutAllUsers("/users"));

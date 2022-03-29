@@ -12,9 +12,9 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 public class HttpUtillities {
-    public static final  HttpClient client = HttpClient.newHttpClient();
+    public static final  HttpClient CLIENT = HttpClient.newHttpClient();
     public static final String URL = "https://jsonplaceholder.typicode.com";
-    public static Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static void createNewObject (String endpoint, User myUser) throws IOException, InterruptedException {
 
@@ -24,7 +24,7 @@ public class HttpUtillities {
                 .header("Content-Type", "application/json; charset=utf-8")
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
-        HttpResponse<String> responce =  client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> responce =  CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println("Проверяем тело ответа. Если id у возвращенного объекта будет 11  - то все Ok.");
         System.out.println(responce.body());
     }
@@ -33,8 +33,13 @@ public class HttpUtillities {
 
     }
 
-    public static void deleteObject(HttpClient client ) {
-
+    public static int  deleteObject (String endpoint, User myUser) throws IOException, InterruptedException {
+        String requestBody = GSON.toJson(myUser);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL+endpoint))
+                .method("DELETE", HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+        return CLIENT.send(request, HttpResponse.BodyHandlers.ofString()).statusCode();
     }
 
     public static List<User> getInformationAboutAllUsers (String endpoint) throws IOException, InterruptedException {
@@ -42,7 +47,7 @@ public class HttpUtillities {
                 uri(URI.create(URL+endpoint)).
                 GET().
                 build();
-        HttpResponse<String> responce =  client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> responce =  CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
         return GSON.fromJson(responce.body(), new TypeToken<List<User>>(){}.getType());
     }
 
@@ -52,7 +57,7 @@ public class HttpUtillities {
                 uri(URI.create(requestURL)).
                 GET().
                 build();
-        HttpResponse<String> responce =  client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> responce =  CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
         return GSON.fromJson(responce.body(), User.class);
     }
 
@@ -62,7 +67,7 @@ public class HttpUtillities {
                 uri(URI.create(requestURL)).
                 GET().
                 build();
-        HttpResponse<String> responce =  client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> responce =  CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
         return GSON.fromJson(responce.body(), User.class);
     }
 }
