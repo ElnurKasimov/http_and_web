@@ -2,12 +2,14 @@ package com.http;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 public class HttpUtillities {
     public static final  HttpClient client = HttpClient.newHttpClient();
@@ -35,13 +37,13 @@ public class HttpUtillities {
 
     }
 
-    public static String getInformationAboutAllUsers (String endpoint) throws IOException, InterruptedException {
+    public static List<User> getInformationAboutAllUsers (String endpoint) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder().
                 uri(URI.create(URL+endpoint)).
                 GET().
                 build();
         HttpResponse<String> responce =  client.send(request, HttpResponse.BodyHandlers.ofString());
-        return responce.body();
+        return GSON.fromJson(responce.body(), new TypeToken<List<User>>(){}.getType());
     }
 
     public static User getInformationByID (String endpoint, int id ) throws IOException, InterruptedException {

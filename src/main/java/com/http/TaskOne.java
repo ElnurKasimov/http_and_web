@@ -1,6 +1,7 @@
 package com.http;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -47,9 +48,15 @@ public class TaskOne {
 
 
         // Homework Task 1 part 4
-        System.out.println("Информация о всех пользователях : \n" +HttpUtillities.getInformationAboutAllUsers("/users"));
+        // System.out.println("Информация о всех пользователях : \n" +HttpUtillities.getInformationAboutAllUsers("/users"));
+        System.out.println("---------------------------------------------------------------------");
+        List<User> users = HttpUtillities.getInformationAboutAllUsers("/users");
+        for (User user : users) {
+            System.out.println(user);
+        }
 
         // Homework Task 1 part 5
+        System.out.println("---------------------------------------------------------------------");
         Scanner sc = new Scanner(System.in);
         System.out.print("Ведите id интересуемого Вас объекта (от 1 до 10): ");
         int id = sc.nextInt();
@@ -57,6 +64,7 @@ public class TaskOne {
         System.out.println("Информация о пользователе с id " + id +  ": \n" + userByID);
 
         // Homework Task 1 part 6
+        System.out.println("---------------------------------------------------------------------");
         System.out.print("Ведите username интересуемого Вас объекта : ");
         String username = sc.nextLine();
         username = sc.nextLine();
