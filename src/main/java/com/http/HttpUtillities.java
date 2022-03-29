@@ -17,7 +17,6 @@ public class HttpUtillities {
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static void createNewObject (String endpoint, User myUser) throws IOException, InterruptedException {
-
         String requestBody = GSON.toJson(myUser);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL+endpoint))
@@ -29,7 +28,16 @@ public class HttpUtillities {
         System.out.println(responce.body());
     }
 
-    public static void updateObject(HttpClient client ) {
+    public static void updateObject (String endpoint, User myUser) throws IOException, InterruptedException {
+        String requestBody = GSON.toJson(myUser);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL+endpoint))
+                .header("Content-Type", "application/json; charset=utf-8")
+                .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+        HttpResponse<String> responce =  CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println("Проверяем тело ответа. Если телефон у возвращенного объекта будет 123-45-67-890  - то все Ok.");
+        System.out.println(responce.body());
 
     }
 
