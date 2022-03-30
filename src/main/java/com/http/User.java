@@ -78,8 +78,8 @@ public class User {
     public String toString() {
         return "user{\n" +
                 "\t\"id=\": " + id + ",\n" +
-                "\t\"name\": \"'" + name + "'\",\n" +
-                "\t\"username\": \"'" + username + "'\",\n" +
+                "\t\"name\": \"" + name + "\",\n" +
+                "\t\"username\": \"" + username + "\",\n" +
                 "\t\"email\": \"" + email + "\",\n" +
                  address.toString() +
                 "\t\"phone\": \"" + phone + "\",\n" +

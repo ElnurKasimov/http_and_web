@@ -9,12 +9,15 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Path;
 import java.util.List;
 
 public class HttpUtillities {
     public static final  HttpClient CLIENT = HttpClient.newHttpClient();
     public static final String URL = "https://jsonplaceholder.typicode.com";
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+
+    // Методы для первого задания
 
     public static void createNewObject (String endpoint, User myUser) throws IOException, InterruptedException {
         String requestBody = GSON.toJson(myUser);
@@ -59,23 +62,44 @@ public class HttpUtillities {
         return GSON.fromJson(responce.body(), new TypeToken<List<User>>(){}.getType());
     }
 
-    public static User getInformationByID (String endpoint, int id ) throws IOException, InterruptedException {
+    public static User getUserInformationByID(String endpoint, int id ) throws IOException, InterruptedException {
         String requestURL = String.format("%s%s/%d", URL, endpoint, id);
         HttpRequest request = HttpRequest.newBuilder().
                 uri(URI.create(requestURL)).
                 GET().
                 build();
         HttpResponse<String> responce =  CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(responce.body());
         return GSON.fromJson(responce.body(), User.class);
     }
 
-    public static User getInformationByUsername (String endpoint, String username ) throws IOException, InterruptedException {
+    public static List<User> getUserInformationByUsername(String endpoint, String username ) throws IOException, InterruptedException {
         String requestURL = String.format("%s%s?username=%s", URL, endpoint, username);
         HttpRequest request = HttpRequest.newBuilder().
                 uri(URI.create(requestURL)).
                 GET().
                 build();
         HttpResponse<String> responce =  CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
-        return GSON.fromJson(responce.body(), User.class);
+        return GSON.fromJson(responce.body(), new TypeToken<List<User>>(){}.getType());
     }
+
+    // Методы для  второго задания
+    public static List<Post> getAllPostsDeterminedUser(String endpoint) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder().
+                uri(URI.create(URL+endpoint)).
+                GET().
+                build();
+        HttpResponse<String> responce =  CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+        return GSON.fromJson(responce.body(), new TypeToken<List<Post>>(){}.getType());
+    }
+
+    public static String getAllCommentsOnMaxPost(String endpoint) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder().
+                uri(URI.create(URL+endpoint)).
+                GET().
+                build();
+        HttpResponse<String> responce =  CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+        return responce.body();
+    }
+
 }

@@ -55,7 +55,7 @@ public class TaskOne {
         Scanner sc = new Scanner(System.in);
         System.out.print("Введите id юзера, которого надо удалить  (от 1 до 10): ");
         int id = sc.nextInt();
-        User userForDeleting = HttpUtillities.getInformationByID("/users" , id);
+        User userForDeleting = HttpUtillities.getUserInformationByID("/users" , id);
         System.out.println("Статус операции удаления - " + HttpUtillities.deleteObject("/users/" + id, userForDeleting));
 
         // Homework Task 1 part 4
@@ -68,20 +68,24 @@ public class TaskOne {
 
         // Homework Task 1 part 5
         System.out.println("---------------------------------------------------------------------");
-
         System.out.print("Ведите id интересуемого Вас объекта (от 1 до 10): ");
         id = sc.nextInt();
-        User userByID = HttpUtillities.getInformationByID("/users", id);
+        User userByID = HttpUtillities.getUserInformationByID("/users", id);
         System.out.println("Информация о пользователе с id " + id +  ": \n" + userByID);
 
+
+
         // Homework Task 1 part 6
+
         System.out.println("---------------------------------------------------------------------");
         System.out.print("Ведите username интересуемого Вас объекта : ");
         String username = sc.nextLine();
         username = sc.nextLine();
         sc.close();
-        User userByUsername = HttpUtillities.getInformationByUsername ("/users", username);
-        System.out.println("Информация о пользователе с username  " + username + ": \n" + userByUsername);
-
+        System.out.println("Информация о пользователе/пользователях с username  " + username + ": ");
+        List<User> usersByUsername = HttpUtillities.getUserInformationByUsername("/users", username);
+        for (User user : usersByUsername) {
+            System.out.println(user);
+        }
     }
 }
