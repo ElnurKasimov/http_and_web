@@ -102,4 +102,17 @@ public class HttpUtillities {
         return responce.body();
     }
 
+    // Метод для  третьего задания
+    public static void getAllOpenTasks(String endpoint) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder().
+                uri(URI.create(URL + endpoint)).
+                GET().
+                build();
+        HttpResponse<String> responce = CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+        List<Task> allTasks = GSON.fromJson(responce.body(), new TypeToken<List<Task>>() {
+        }.getType());
+        allTasks.stream().
+                filter(task -> task.completed.equals("false")).
+                forEach(System.out::println);
+    }
 }
