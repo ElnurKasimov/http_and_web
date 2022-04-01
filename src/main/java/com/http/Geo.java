@@ -1,8 +1,8 @@
 package com.http;
 
 public class Geo {
-    String lat;
-    String lng;
+    private String lat;
+    private String lng;
 
     public String getLat() {
         return lat;
@@ -18,6 +18,28 @@ public class Geo {
 
     public void setLng(String lng) {
         this.lng = lng;
+    }
+
+    public static class Builder {
+        private final Geo newGeo;
+
+        public Builder() {
+            newGeo = new Geo();
+        }
+
+        public Builder withLat(String lat) {
+            newGeo.lat = lat;
+            return this;
+        }
+
+        public Builder withLng(String lng) {
+            newGeo.lng = lng;
+            return this;
+        }
+
+        public Geo build() {
+            return newGeo;
+        }
     }
 
     @Override

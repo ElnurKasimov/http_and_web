@@ -8,35 +8,23 @@ import java.util.Scanner;
 public class TaskOne {
 
     public static User initializeMyUser() {
-        Address address = new Address();
-        Geo geo = new Geo();
-        Company company = new Company();
-        User myUser = new User();
 
-        geo.setLat("48.526090");
-        geo.setLng("34.957614");
+        Geo geo = new Geo.Builder().
+                withLat("48.526090").withLng("34.957614").build();
 
-        address.setStreet("Belgradska");
-        address.setSuite("Suite 12");
-        address.setCity("Dnepr");
-        address.setZipcode("49082");
-        address.setGeo(geo);
+        Company company = new Company.Builder().
+                withName("Best choice").
+                withCatchPhrase("Synchronised bottom-line interface").
+                withBS("e-enable innovative applications").build();
 
-        company.setName("Best choice");
-        company.setCatchPhrase("Synchronised bottom-line interface");
-        company.setBs("e-enable innovative applications");
+        Address address = new Address.Builder().
+                withStreet("Belgradska").withSuit("Suite 12").withCity("Dnepr").withZipcode("49082").withGeo(geo).build();
 
-        myUser.setId(0);
-        myUser.setName("Elnur Kasimov");
-        myUser.setUsername("Elnur_Dnepr");
-        myUser.setEmail("myEmail@gmail.com");
-        myUser.setAddress(address);
 
-        myUser.setPhone("056-67-24-765");
-        myUser.setWebsite("mywebsite.com.ua");
-        myUser.setCompany(company);
-
-        return myUser;
+        return new User.Builder().withID(0).withName("Elnur Kasimov").
+                withUsername("Elnur_Dnepr").withEmail("myEmail@gmail.com").
+                withAddress(address).withPhone("056-67-24-765").
+                withWebsite("mywebsite.com.ua").withCompany(company).build();
     }
 
 
@@ -44,6 +32,7 @@ public class TaskOne {
 
         // Homework Task 1 part 1
         User myUser = initializeMyUser();
+        System.out.println(myUser);
         HttpUtillities.createNewObject("/users", myUser);
 
         // Homework Task 1 part 2
@@ -79,8 +68,10 @@ public class TaskOne {
 
         System.out.println("---------------------------------------------------------------------");
         System.out.print("Ведите username интересуемого Вас объекта : ");
-        String username = sc.nextLine();
-        username = sc.nextLine();
+        String username = "";
+        while (username.equals("")) {
+            username = sc.nextLine();
+        }
         sc.close();
         System.out.println("Информация о пользователе/пользователях с username  " + username + ": ");
         List<User> usersByUsername = HttpUtillities.getUserInformationByUsername("/users", username);

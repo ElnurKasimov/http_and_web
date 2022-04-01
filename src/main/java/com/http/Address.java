@@ -47,6 +47,44 @@ public class Address {
         this.geo = geo;
     }
 
+    public static class Builder {
+        private final Address newAddress;
+
+        public Builder() {
+            newAddress = new Address();
+        }
+
+        public Address.Builder  withStreet(String street) {
+            newAddress.street = street;
+            return this;
+        }
+
+        public Address.Builder  withSuit(String suite) {
+            newAddress.suite = suite;
+            return this;
+        }
+
+        public Address.Builder  withCity (String city) {
+            newAddress.city = city;
+            return this;
+        }
+
+        public Address.Builder  withZipcode (String zipcode) {
+            newAddress.zipcode = zipcode;
+            return this;
+        }
+
+        public Address.Builder  withGeo (Geo geo) {
+            newAddress.geo = geo;
+            return this;
+        }
+
+        public Address build() {
+            return newAddress;
+        }
+    }
+
+
     @Override
     public String toString() {
         return "\t\"address\": {\n" +

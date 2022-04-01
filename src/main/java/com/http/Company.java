@@ -29,6 +29,34 @@ public class Company {
         this.bs = bs;
     }
 
+    public static class Builder {
+        private final Company newCompany;
+
+        public Builder() {
+            newCompany = new Company();
+        }
+
+        public Company.Builder  withName(String name) {
+            newCompany.name = name;
+            return this;
+        }
+
+        public Company.Builder  withCatchPhrase(String catchPhrase) {
+            newCompany.catchPhrase = catchPhrase;
+            return this;
+        }
+
+        public Company.Builder  withBS(String bs) {
+            newCompany.bs = bs;
+            return this;
+        }
+
+        public Company build() {
+            return newCompany;
+        }
+    }
+
+
     @Override
     public String toString() {
         return "\t\"company\": {\n" +
